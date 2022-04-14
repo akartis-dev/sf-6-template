@@ -1,6 +1,6 @@
 {
     "devDependencies": {
-        "@babel/plugin-transform-react-jsx": "^7.0.0",
+        "@babel/plugin-transform-react-jsx": "^7.17.3",
         "@hotwired/stimulus": "^3.0.0",
         "@symfony/stimulus-bridge": "^3.0.0",
         "@symfony/webpack-encore": "^1.7.0",
@@ -17,5 +17,8 @@
         "dev": "encore dev",
         "watch": "encore dev --watch",
         "build": "encore production --progress"
+    },
+    "dependencies": {
+        "preact": "^10.7.1"
     }
 }
