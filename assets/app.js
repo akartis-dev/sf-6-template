@@ -11,3 +11,14 @@ import './styles/app.scss';
 // start the Stimulus application
 import './bootstrap';
 import './js/component/index'
+import 'unpoly'
+
+// unpoly config
+up.log.enable()
+
+const config = up.network.config;
+
+up.network.config = {
+  ...config,
+  autoCache: function (request) { return false },
+}

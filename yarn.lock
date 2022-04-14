@@ -4299,6 +4299,11 @@ unpipe@1.0.0, unpipe@~1.0.0:
   resolved "https://registry.yarnpkg.com/unpipe/-/unpipe-1.0.0.tgz#b2bf4ee8514aae6165b4817829d21b2ef49904ec"
   integrity sha1-sr9O6FFKrmFltIF4KdIbLvSZBOw=
 
+unpoly@^2.5.3:
+  version "2.5.3"
+  resolved "https://registry.yarnpkg.com/unpoly/-/unpoly-2.5.3.tgz#af23741ebb106f47297abb0ca9f9ceeed5c7035a"
+  integrity sha512-WvzcCNOMauQOaMK5CSHmKmir9cvd3tcJ3ALotiyYL/X2RtUKDFLxM+T5X1mrCRs/qA5jJuhWBcziKO7Ixn52YQ==
+
 uri-js@^4.2.2:
   version "4.4.1"
   resolved "https://registry.yarnpkg.com/uri-js/-/uri-js-4.4.1.tgz#9b1a52595225859e55f669d928f88c6c57f2a77e"

@@ -10,10 +10,22 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class TestController extends AppAbstractController
 {
-    #[Route('/test')]
+    #[Route('/', name: "index")]
     #[Template]
-    public function test()
+    public function index()
     {
+    }
 
+    #[Route('/page', name: "page")]
+    #[Template]
+    public function page()
+    {
+    }
+
+    #[Route('/about', name: "about")]
+    #[Template]
+    public function about()
+    {
+        sleep(3);
     }
 }
