@@ -4,6 +4,9 @@ namespace App\Entity\Products;
 
 use App\Annotations\AppTranslationField;
 use App\Entity\Products\Associated\AssociatedProductsProducts;
+use App\Entity\Products\Attribut\AttributTerms;
+use App\Entity\Products\Attribut\AttributTitle;
+use App\Entity\Products\Attribut\ProductsAttributsTerms;
 use App\Entity\Products\Categories\ProductsCategories;
 use App\Repository\Products\ProductsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -76,13 +79,24 @@ class Products implements TranslatableInterface
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: AssociatedProductsProducts::class)]
     private ArrayCollection|PersistentCollection $associatedProducts;
 
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: AttributTitle::class)]
+    private ArrayCollection|PersistentCollection $customAttributTitles;
+
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: AttributTerms::class)]
+    private $attributTerms;
+
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductsAttributsTerms::class)]
+    private $productsAttributsTerms;
+
     public function __construct()
     {
-        $this->translations = new ArrayCollection();
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
         $this->productsCategories = new ArrayCollection();
         $this->associatedProducts = new ArrayCollection();
+        $this->customAttributTitles = new ArrayCollection();
+        $this->attributTerms = new ArrayCollection();
+        $this->productsAttributsTerms = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -351,6 +365,96 @@ class Products implements TranslatableInterface
             // set the owning side to null (unless already changed)
             if ($associatedProduct->getProduct() === $this) {
                 $associatedProduct->setProduct(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, AttributTitle>
+     */
+    public function getCustomAttributTitles(): Collection
+    {
+        return $this->customAttributTitles;
+    }
+
+    public function addCustomAttributTitle(AttributTitle $customAttributTitle): self
+    {
+        if (!$this->customAttributTitles->contains($customAttributTitle)) {
+            $this->customAttributTitles[] = $customAttributTitle;
+            $customAttributTitle->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCustomAttributTitle(AttributTitle $customAttributTitle): self
+    {
+        if ($this->customAttributTitles->removeElement($customAttributTitle)) {
+            // set the owning side to null (unless already changed)
+            if ($customAttributTitle->getProduct() === $this) {
+                $customAttributTitle->setProduct(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, AttributTerms>
+     */
+    public function getAttributTerms(): Collection
+    {
+        return $this->attributTerms;
+    }
+
+    public function addAttributTerm(AttributTerms $attributTerm): self
+    {
+        if (!$this->attributTerms->contains($attributTerm)) {
+            $this->attributTerms[] = $attributTerm;
+            $attributTerm->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAttributTerm(AttributTerms $attributTerm): self
+    {
+        if ($this->attributTerms->removeElement($attributTerm)) {
+            // set the owning side to null (unless already changed)
+            if ($attributTerm->getProduct() === $this) {
+                $attributTerm->setProduct(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ProductsAttributsTerms>
+     */
+    public function getProductsAttributsTerms(): Collection
+    {
+        return $this->productsAttributsTerms;
+    }
+
+    public function addProductsAttributsTerm(ProductsAttributsTerms $productsAttributsTerm): self
+    {
+        if (!$this->productsAttributsTerms->contains($productsAttributsTerm)) {
+            $this->productsAttributsTerms[] = $productsAttributsTerm;
+            $productsAttributsTerm->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProductsAttributsTerm(ProductsAttributsTerms $productsAttributsTerm): self
+    {
+        if ($this->productsAttributsTerms->removeElement($productsAttributsTerm)) {
+            // set the owning side to null (unless already changed)
+            if ($productsAttributsTerm->getProduct() === $this) {
+                $productsAttributsTerm->setProduct(null);
             }
         }
 
