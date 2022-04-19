@@ -28,7 +28,6 @@ security:
       pattern: ^/(_(profiler|wdt)|css|images|js)/
       security: false
     main:
-#      pattern: ^/(%app.locales%)/user
       lazy: true
       entry_point: App\Security\AppAuthEntryPoint
       custom_authenticator:
@@ -37,27 +36,7 @@ security:
         - App\Security\AdminAuthenticator
       logout:
         path: app_logout
-        # where to redirect after logout
-        # target: app_any_route
 
-        # where to redirect after logout
-        # target: app_any_route
-#    superadmin:
-##      pattern: ^/(%app.locales%)/superadmin
-#      lazy: true
-#      provider: app_superadmin_provider
-#      entry_point: App\Security\AppAuthEntryPoint
-#      form_login:
-#        login_path: app_login_superadmin
-#        check_path: app_login_superadmin
-#    admin:
-##      pattern: ^/(%app.locales%)/admin
-#      lazy: true
-#      provider: app_admin_provider
-#      entry_point: App\Security\AppAuthEntryPoint
-#      form_login:
-#        login_path: app_login_admin
-#        check_path: app_login_admin
       # activate different ways to authenticate
       # https://symfony.com/doc/current/security.html#the-firewall
 
