@@ -18,9 +18,9 @@ class TestController extends AppAbstractController
     public function index(ProductsRepository $repository, EntityObjectManager $em, Request $request)
     {
         $product = $repository->find(1);
-        $product = $em->translate($product, 'fr');
+        $product = $em->translate($product, $request->getLocale());
 
-        dd($product);
+        return ['product' => $product];
     }
 
     #[Route('/page', name: "page")]
@@ -36,7 +36,7 @@ class TestController extends AppAbstractController
         sleep(3);
     }
 
-    #[Route('/test', name: "about")]
+    #[Route('/test', name: "test")]
     #[Template]
     public function test(EntityManagerInterface $em)
     {

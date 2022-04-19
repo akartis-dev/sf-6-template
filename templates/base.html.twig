@@ -10,12 +10,16 @@
         {% endblock %}
     </head>
     <body>
-        <nav>
-            <a up-follow up-preload href="{{ url('index') }}">Index</a>
-            <a up-follow up-preload up-clear-cache href="{{ url('page') }}">Page</a>
-            <a up-follow up-preload href="{{ url('about') }}">About</a>
-        </nav>
+
         <div class="content" up-main>
+            <nav>
+                <a up-follow up-preload href="{{ url('index') }}">Index</a>
+                <a up-follow up-preload up-clear-cache href="{{ url('page') }}">Page</a>
+                <a up-follow up-preload href="{{ url('about') }}">About</a>
+                <a up-follow up-preload href="{{ path(app.request.get('_route'), {'_locale': "fr"}) }}">fr</a>
+                <a up-follow up-preload href="{{ path(app.request.get('_route'), {'_locale': "de"}) }}">de</a>
+                <a up-follow up-preload href="{{ path(app.request.get('_route'), {'_locale': "it"}) }}">it</a>
+            </nav>
             {% block body %}{% endblock %}
         </div>
 

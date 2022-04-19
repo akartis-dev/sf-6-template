@@ -2,5 +2,11 @@
 {% block body %}
 	<h1>Demo</h1>
 	<div>{% trans %}nom{% endtrans%} </div>
+	<div>
+		<h1>Produits {{ product.name }}</h1>
+		<div>{{ product.description }}</div>
+	</div>
 	<div app-counter></div>
+	<div>{{ "Je me nomme Sitraka" | trans }}</div>
+
 {% endblock %}

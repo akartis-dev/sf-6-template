@@ -1,11 +1,12 @@
 <?php
+
 /**
  * @author <akartis-dev>
  */
 
 namespace App\ObjectManager;
 
-
+use App\Annotations\AppTranslationField;
 use Doctrine\ORM\EntityManagerInterface;
 
 class EntityObjectManager
@@ -50,8 +51,32 @@ class EntityObjectManager
         return $this->em;
     }
 
-    public function translate($entity, string $locale)
+    /**
+     * Translate a new entity
+     *
+     * @param $entity
+     * @param string $locale
+     * @return mixed
+     * @throws \ReflectionException
+     */
+    public function translate($entity, string $locale): mixed
     {
+        $translatedEntity = $entity->translate($locale);
+        $class = new \ReflectionClass(get_class($entity));
 
+        foreach ($class->getProperties() as $property) {
+            $attributes = $property->getAttributes();
+
+            foreach ($attributes as $attribute) {
+                if ($attribute->getName() === AppTranslationField::class) {
+                    $getter = sprintf("get%s", ucfirst($property->getName()));
+                    $setter = sprintf("set%s", ucfirst($property->getName()));
+                    $result = $translatedEntity->$getter();
+                    $entity->$setter($result);
+                }
+            }
+        }
+
+        return $entity;
     }
 }
