@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 	<h1>Demo</h1>
+	You are logged in as {{ app.user.email }}
 	<div>{% trans %}nom{% endtrans%} </div>
 	<div>
 		<h1>Produits {{ product.name }}</h1>

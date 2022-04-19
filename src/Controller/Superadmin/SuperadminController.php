@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route("/{_locale}/superadmin")]
 class SuperadminController extends AppAbstractController
 {
-    #[Route("/")]
+    #[Route("/", name: "superadmin_index")]
     public function index()
     {
         dd('connecter superadmin');

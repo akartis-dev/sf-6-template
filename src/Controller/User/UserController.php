@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route("/{_locale}/user")]
 class UserController extends AppAbstractController
 {
-    #[Route("/")]
+    #[Route("/", name: "user_index")]
     public function index()
     {
         dd('connecter');

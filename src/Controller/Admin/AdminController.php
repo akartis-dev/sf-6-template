@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route("/{_locale}/admin")]
 class AdminController extends AppAbstractController
 {
-    #[Route("/")]
+    #[Route("/", name: "admin_index")]
     public function index()
     {
         dd('connecter pharmacies');

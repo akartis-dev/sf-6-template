@@ -19,7 +19,7 @@ class Superadmin implements UserInterface, PasswordAuthenticatedUserInterface
     private string $email;
 
     #[ORM\Column(type: 'json')]
-    private array $roles = [];
+    private $roles = [];
 
     #[ORM\Column(type: 'string')]
     private string $password;
