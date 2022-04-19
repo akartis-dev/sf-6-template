@@ -5,6 +5,11 @@ security:
     Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'bcrypt'
     App\Entity\User:
       algorithm: auto
+    App\Entity\Superadmin:
+      algorithm: auto
+    App\Entity\Pharmacists:
+      algorithm: auto
+
 
   # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
   providers:
@@ -13,16 +18,41 @@ security:
       entity:
         class: App\Entity\User
         property: email
+    app_superadmin_provider:
+      entity:
+        class: App\Entity\Superadmin
+        property: email
+    app_admin_provider:
+      entity:
+        class: App\Entity\Admin
+        property: email
+    # used to reload user from session & other features (e.g. switch_user)
+    # used to reload user from session & other features (e.g. switch_user)
   firewalls:
     dev:
       pattern: ^/(_(profiler|wdt)|css|images|js)/
       security: false
     main:
+      pattern: ^/(%app.locales%)/user
       lazy: true
       provider: app_user_provider
       form_login:
         login_path: app_login
         check_path: app_login
+    superadmin:
+      pattern: ^/(%app.locales%)/superadmin
+      lazy: true
+      provider: app_superadmin_provider
+      form_login:
+        login_path: app_login_superadmin
+        check_path: app_login_superadmin
+    admin:
+      pattern: ^/(%app.locales%)/admin
+      lazy: true
+      provider: app_admin_provider
+      form_login:
+        login_path: app_login_admin
+        check_path: app_login_admin
       # activate different ways to authenticate
       # https://symfony.com/doc/current/security.html#the-firewall
 
@@ -34,6 +64,10 @@ security:
   access_control:
     # - { path: ^/admin, roles: ROLE_ADMIN }
     - { path: ^/(%app.locales%)/user, roles: ROLE_USER }
+    - { path: ^/(%app.locales%)/admin/login, roles: PUBLIC_ACCESS }
+    - { path: ^/(%app.locales%)/admin, roles: ROLE_ADMIN }
+    - { path: ^/(%app.locales%)/superadmin/login, roles: PUBLIC_ACCESS }
+    - { path: ^/(%app.locales%)/superadmin, roles: ROLE_SUPERADMIN }
 
 when@test:
   security:

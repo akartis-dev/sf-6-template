@@ -21,4 +21,28 @@ class LoginController extends AppAbstractController
             'error' => $error,
         ]);
     }
+
+    #[Route('/superadmin/login', name: 'app_login_superadmin')]
+    public function superadmin(AuthenticationUtils $authenticationUtils): Response
+    {
+        $error = $authenticationUtils->getLastAuthenticationError();
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+        return $this->render('login/superadmin.html.twig', [
+            'last_username' => $lastUsername,
+            'error' => $error,
+        ]);
+    }
+
+    #[Route('/admin/login', name: 'app_login_admin')]
+    public function pharmacists(AuthenticationUtils $authenticationUtils): Response
+    {
+        $error = $authenticationUtils->getLastAuthenticationError();
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+        return $this->render('login/pharmacists.html.twig', [
+            'last_username' => $lastUsername,
+            'error' => $error,
+        ]);
+    }
 }
