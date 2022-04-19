@@ -3,6 +3,7 @@
 namespace App\Entity\Products;
 
 use App\Annotations\AppTranslationField;
+use App\Entity\Products\Associated\AssociatedProductsProducts;
 use App\Entity\Products\Categories\ProductsCategories;
 use App\Repository\Products\ProductsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -72,12 +73,16 @@ class Products implements TranslatableInterface
     #[ORM\ManyToMany(targetEntity: ProductsCategories::class, mappedBy: 'products')]
     private ArrayCollection|PersistentCollection $productsCategories;
 
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: AssociatedProductsProducts::class)]
+    private ArrayCollection|PersistentCollection $associatedProducts;
+
     public function __construct()
     {
         $this->translations = new ArrayCollection();
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
         $this->productsCategories = new ArrayCollection();
+        $this->associatedProducts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -317,6 +322,36 @@ class Products implements TranslatableInterface
     {
         if ($this->productsCategories->removeElement($productsCategory)) {
             $productsCategory->removeProduct($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, AssociatedProductsProducts>
+     */
+    public function getAssociatedProducts(): Collection
+    {
+        return $this->associatedProducts;
+    }
+
+    public function addAssociatedProduct(AssociatedProductsProducts $associatedProduct): self
+    {
+        if (!$this->associatedProducts->contains($associatedProduct)) {
+            $this->associatedProducts[] = $associatedProduct;
+            $associatedProduct->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAssociatedProduct(AssociatedProductsProducts $associatedProduct): self
+    {
+        if ($this->associatedProducts->removeElement($associatedProduct)) {
+            // set the owning side to null (unless already changed)
+            if ($associatedProduct->getProduct() === $this) {
+                $associatedProduct->setProduct(null);
+            }
         }
 
         return $this;
