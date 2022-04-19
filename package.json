@@ -19,6 +19,7 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "axios": "^0.26.1",
         "preact": "^10.7.1",
         "unpoly": "^2.5.3"
     }
