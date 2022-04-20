@@ -22,12 +22,10 @@ class AdminAuthenticator extends AbstractLoginFormAuthenticator
 
     public const LOGIN_ROUTE = 'app_login_admin';
 
-
     public function __construct(
         private UrlGeneratorInterface $urlGenerator,
         private PharmacistsRepository $pharmacistsRepository
-    )
-    {
+    ) {
     }
 
     public function authenticate(Request $request): Passport
@@ -35,11 +33,17 @@ class AdminAuthenticator extends AbstractLoginFormAuthenticator
         $email = $request->request->get('email', '');
 
         $request->getSession()->set(Security::LAST_USERNAME, $email);
+        $user = $this->pharmacistsRepository->findOneBy(['email' => $email]);
+        $badge = new UserBadge($email);
+
+        if ($user) {
+            $badge->setUserLoader(function ($userIdentifier) use ($user) {
+                return $user;
+            });
+        }
 
         return new Passport(
-            new UserBadge($email, function ($userIdentifier) {
-                return $this->pharmacistsRepository->findOneBy(['email' => $userIdentifier]);
-            }),
+            $badge,
             new PasswordCredentials($request->request->get('password', '')),
             [
                 new CsrfTokenBadge('authenticate', $request->request->get('_csrf_token')),

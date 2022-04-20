@@ -1,14 +1,13 @@
 <?php
+
 /**
  * @author <akartis-dev>
  */
 
 namespace App\Security;
 
-
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Http\EntryPoint\AuthenticationEntryPointInterface;
@@ -25,12 +24,12 @@ class AppAuthEntryPoint implements AuthenticationEntryPointInterface
     {
         $requestedUrl = $request->getPathInfo();
         $splited = explode("/", $requestedUrl);
-
-        if($splited[2] === "superadmin"){
+        $prefix = $splited[2];
+        if ($prefix === "superadmin") {
             return new RedirectResponse($this->generator->generate("app_login_superadmin"));
         }
 
-        if($splited[2] === "admin"){
+        if ($prefix === "admin") {
             return new RedirectResponse($this->generator->generate("app_login_admin"));
         }
 

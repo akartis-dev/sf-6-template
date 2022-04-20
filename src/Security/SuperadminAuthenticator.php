@@ -26,8 +26,7 @@ class SuperadminAuthenticator extends AbstractLoginFormAuthenticator
     public function __construct(
         private UrlGeneratorInterface $urlGenerator,
         private SuperadminRepository $superadminRepository
-    )
-    {
+    ) {
     }
 
     public function authenticate(Request $request): Passport
@@ -35,11 +34,17 @@ class SuperadminAuthenticator extends AbstractLoginFormAuthenticator
         $email = $request->request->get('email', '');
 
         $request->getSession()->set(Security::LAST_USERNAME, $email);
+        $user = $this->superadminRepository->findOneBy(['email' => $email]);
+        $badge = new UserBadge($email);
+
+        if ($user) {
+            $badge->setUserLoader(function ($userIdentifier) use ($user) {
+                return $user;
+            });
+        }
 
         return new Passport(
-            new UserBadge($email, function ($userIdentifier) {
-                return $this->superadminRepository->findOneBy(['email' => $userIdentifier]);
-            }),
+            $badge,
             new PasswordCredentials($request->request->get('password', '')),
             [
                 new CsrfTokenBadge('authenticate', $request->request->get('_csrf_token')),
