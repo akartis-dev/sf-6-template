@@ -16,8 +16,7 @@ class AppAuthEntryPoint implements AuthenticationEntryPointInterface
 {
     public function __construct(
         private UrlGeneratorInterface $generator
-    )
-    {
+    ) {
     }
 
     public function start(Request $request, AuthenticationException $authException = null)

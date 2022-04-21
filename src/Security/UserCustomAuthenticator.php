@@ -24,8 +24,7 @@ class UserCustomAuthenticator extends AbstractLoginFormAuthenticator
 
     public function __construct(
         private UrlGeneratorInterface $urlGenerator
-    )
-    {
+    ) {
     }
 
     public function authenticate(Request $request): Passport
